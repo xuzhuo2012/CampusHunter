@@ -33,9 +33,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.position_list);
 
 		RSSFeed feed = getFeed();
-
-		String title = feed.getTitle();
-		Log.d(TAG, "title" + title);
+		//String title = feed.getTitle();
+		Log.d(TAG, "Size of Item = " + feed.getItemList().size());
 
 	}
 
