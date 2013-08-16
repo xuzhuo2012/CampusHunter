@@ -4,17 +4,25 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class RSSHandler extends DefaultHandler {
+import android.util.Log;
 
-	RSSFeed rssFeed;
-	RSSItem rssItem;
+public class RSSHandler extends DefaultHandler {
 	
-	final int RSS_TITLE = 1;
-	final int RSS_LINK = 2;
-	final int RSS_PUBDATE = 3;
-	final int RSS_DESCRIPTION = 4;
+	private final static String TAG = "RSSHandler";
+
+	private RSSFeed rssFeed;
+	private RSSItem rssItem;
 	
-	int currentstate = 0;
+	// private final int RSS_FEED_TITLE = 1;
+	// private final int RSS_FEED_LINK = 2;
+	// private final int RSS_FEED_DESCRIPTION = 3;
+	
+	private final int RSS_TITLE = 11;
+	private final int RSS_LINK = 12;
+	private final int RSS_PUBDATE = 13;
+	private final int RSS_DESCRIPTION = 14;
+	
+	private int currentstate = 0;
 
 	public RSSHandler() {
 	}
@@ -24,23 +32,25 @@ public class RSSHandler extends DefaultHandler {
 	}
 	@Override
 	public void startDocument() throws SAXException {
+		
+		Log.d(TAG, "Start Document");
 		rssFeed = new RSSFeed();
 		rssItem = new RSSItem();
 	}
 	
 	@Override
 	public void endDocument() throws SAXException {
+		Log.d(TAG, "endDocument");
 	}
 	
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		
+		
+		Log.d(TAG, "startElement");
+		
 		if (localName.equals("channel")) {
 			currentstate = 0;
-			return;
-		}
-		if (localName.equals("item")) {
-			rssItem = new RSSItem();
 			return;
 		}
 		if (localName.equals("title")) {
@@ -49,6 +59,12 @@ public class RSSHandler extends DefaultHandler {
 		}
 		if (localName.equals("description")) {
 			currentstate = RSS_DESCRIPTION;
+			return;
+		}
+		
+		if (localName.equals("item")) {
+			rssItem = new RSSItem();
+			rssFeed.addItem(rssItem);
 			return;
 		}
 		if (localName.equals("link")) {
@@ -64,6 +80,8 @@ public class RSSHandler extends DefaultHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
+		
+		Log.d(TAG, "endElement");
 		if (localName.equals("item")) {
 			return;
 		}
@@ -71,6 +89,7 @@ public class RSSHandler extends DefaultHandler {
 
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
+		Log.d(TAG, "characters");
 		String theString = new String(ch, start, length);
 		switch (currentstate) {
 		case RSS_TITLE:

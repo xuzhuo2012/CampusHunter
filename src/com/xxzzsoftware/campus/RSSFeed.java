@@ -45,5 +45,9 @@ public class RSSFeed {
 	public void setItemList(List<RSSItem> itemList) {
 		this.itemList = itemList;
 	}
+	
+	public void addItem(RSSItem item){
+		itemList.add(item);
+	}
 
 }
