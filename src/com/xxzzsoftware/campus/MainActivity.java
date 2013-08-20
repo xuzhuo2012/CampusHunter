@@ -20,13 +20,17 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
 public class MainActivity extends Activity {
 
 	private final static String TAG = "MainActivity";
 
 	private final static String url = "http://job.hust.edu.cn/show/rss/employment_rss.htm";
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,7 +39,18 @@ public class MainActivity extends Activity {
 		RSSFeed feed = getFeed();
 		//String title = feed.getTitle();
 		Log.d(TAG, "Size of Item = " + feed.getItemList().size());
-
+		
+		ListView posList = (ListView) findViewById(R.id.position_list);
+		
+		posList.setAdapter(new RSSAdapter(feed.getItemList(),this));
+		
+		posList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				
+			}
+		});
+		
 	}
 
 	public InputSource getIsNet() {

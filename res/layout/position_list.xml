@@ -7,14 +7,11 @@
         android:id="@+id/position_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8sp"
         android:background="@drawable/border"
         android:divider="@drawable/divider"
         android:dividerHeight="1dp"
-        android:overScrollFooter="@null"
-        android:paddingBottom="16sp"
-        android:paddingLeft="25sp"
-        android:paddingRight="25sp"
-        android:paddingTop="16sp" />
+        android:padding="16dp"
+        android:cacheColorHint="#00000000"
+        />
 
 </LinearLayout>
