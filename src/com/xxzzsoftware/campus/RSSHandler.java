@@ -89,8 +89,8 @@ public class RSSHandler extends DefaultHandler {
 
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
-		Log.d(TAG, "characters");
 		String theString = new String(ch, start, length);
+		Log.d(TAG, "characters = "+theString);
 		switch (currentstate) {
 		case RSS_TITLE:
 			rssItem.setTitle(theString);

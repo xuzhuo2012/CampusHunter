@@ -13,5 +13,13 @@
     	android:textIsSelectable="false"
     	android:textSize="20sp"
         />
+    <TextView
+        android:id="@+id/pub_date"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:singleLine="true"
+    	android:ellipsize="end"
+    	android:textIsSelectable="false"
+        />
     
 </LinearLayout>

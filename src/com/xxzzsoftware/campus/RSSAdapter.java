@@ -48,8 +48,10 @@ public class RSSAdapter extends BaseAdapter {
 		View view = mInflater.inflate(R.layout.position_item, null);
 		
 		TextView title = (TextView) view.findViewById(R.id.title);
+		TextView pubDate = (TextView) view.findViewById(R.id.pub_date);
 		
 		title.setText(rssList.get(position).getTitle());
+		pubDate.setText(rssList.get(position).getPubdate());
 		
 		return view;
 	}

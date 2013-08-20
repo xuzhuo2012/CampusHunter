@@ -1,6 +1,10 @@
 package com.xxzzsoftware.campus;
 
-public class RSSItem {
+import java.io.Serializable;
+
+public class RSSItem implements Serializable{
+	
+	private static final long serialVersionUID = 4380814119743246240L;
 	
 	public static String TITLE    = "title";
 	public static String LINK     = "link";

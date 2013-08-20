@@ -2,6 +2,8 @@ package com.xxzzsoftware.campus;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -17,6 +19,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,26 +32,34 @@ import android.widget.ListView;
 public class MainActivity extends Activity {
 
 	private final static String TAG = "MainActivity";
-
 	private final static String url = "http://job.hust.edu.cn/show/rss/employment_rss.htm";
+	public final static String RSS_ITEM = "KEY_RSS_ITEM";
+	
+	private Context context;
+	private List<RSSItem> itemList = new ArrayList<RSSItem>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.position_list);
+		context = this;
 
 		RSSFeed feed = getFeed();
 		//String title = feed.getTitle();
-		Log.d(TAG, "Size of Item = " + feed.getItemList().size());
+		itemList = feed.getItemList();
+		Log.d(TAG, "Size of Item = " + itemList.size());
 		
 		ListView posList = (ListView) findViewById(R.id.position_list);
 		
-		posList.setAdapter(new RSSAdapter(feed.getItemList(),this));
+		posList.setAdapter(new RSSAdapter(itemList, this));
 		
 		posList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				
+				RSSItem rssItem = itemList.get(position);
+				Intent intent = new Intent(context,DetailActivity.class);
+				intent.putExtra(RSS_ITEM, rssItem);
+				context.startActivity(intent);
 			}
 		});
 		
