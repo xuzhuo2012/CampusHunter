@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -37,6 +36,7 @@ public class MainActivity extends Activity {
 	public final static String RSS_ITEM = "KEY_RSS_ITEM";
 	
 	private Context context;
+	private RSSFeed feed;
 	private List<RSSItem> itemList = new ArrayList<RSSItem>();
 	
 	@Override
@@ -44,33 +44,18 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.position_list);
 		context = this;
-
-		RSSFeed feed = getFeed();
-		//String title = feed.getTitle();
-		itemList = feed.getItemList();
-		Log.d(TAG, "Size of Item = " + itemList.size());
+		final ListView posList = (ListView) findViewById(R.id.position_list);
 		
-		new Thread(){
-
+		posList.post(new Runnable() {
 			@Override
 			public void run() {
-				
-				
-					for(int i = 0; i < 1000; i++){
-						
-						Looper.prepare();
-						setTitle("i = "+i);
-						Looper.loop();
-						Log.d(TAG, "i = "+i);
-					}
+				feed = getFeed();
+				itemList = feed.getItemList();
+				Log.d(TAG, "Size of Item = " + itemList.size());
+				posList.setAdapter(new RSSAdapter(itemList, context));
 			}
-			
-			
-		}.start();
+		});
 		
-		ListView posList = (ListView) findViewById(R.id.position_list);
-		
-		posList.setAdapter(new RSSAdapter(itemList, this));
 		
 		posList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
