@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -49,6 +50,24 @@ public class MainActivity extends Activity {
 		itemList = feed.getItemList();
 		Log.d(TAG, "Size of Item = " + itemList.size());
 		
+		new Thread(){
+
+			@Override
+			public void run() {
+				
+				
+					for(int i = 0; i < 1000; i++){
+						
+						Looper.prepare();
+						setTitle("i = "+i);
+						Looper.loop();
+						Log.d(TAG, "i = "+i);
+					}
+			}
+			
+			
+		}.start();
+		
 		ListView posList = (ListView) findViewById(R.id.position_list);
 		
 		posList.setAdapter(new RSSAdapter(itemList, this));
@@ -62,9 +81,8 @@ public class MainActivity extends Activity {
 				context.startActivity(intent);
 			}
 		});
-		
 	}
-
+	
 	public InputSource getIsNet() {
 		HttpClient client = new DefaultHttpClient();
 		try {
